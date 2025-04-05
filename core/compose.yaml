@@ -20,6 +20,7 @@ services:
       VERSION: 1.21.4
       DIFFICULTY: normal
       TYPE: FABRIC
+      MEMORY: 4G
     volumes:
       - mc_data:/data
 
