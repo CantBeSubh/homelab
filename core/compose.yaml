@@ -13,6 +13,7 @@ services:
     container_name: mc
     tty: true
     stdin_open: true
+    restart: unless-stopped
     ports:
       - 25565:25565
     environment:
@@ -20,7 +21,7 @@ services:
       VERSION: 1.21.4
       DIFFICULTY: normal
       TYPE: FABRIC
-      MEMORY: 4G
+      MEMORY: 8G
     volumes:
       - mc_data:/data
 
