@@ -15,6 +15,9 @@ services:
       MAX_MEMORY: 8G
       COPY_MODS_SRC: /mods
       DATAPACKS: /datapacks
+      ONLINE_MODE: false
+      PVP: false
+      
     volumes:
       - ./mc_data:/data
       - ./mc_mods:/mods:ro
