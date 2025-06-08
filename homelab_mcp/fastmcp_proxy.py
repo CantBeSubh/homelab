@@ -1,10 +1,6 @@
 from fastmcp import FastMCP
 
-# Create a proxy to a remote server
-proxy = FastMCP.as_proxy(
-    "http://192.168.1.25:4200/mcp", 
-    name="Homelab Proxy"
-)
+proxy = FastMCP.as_proxy("https://mcp.homelab.subhranshu.com/mcp", name="Homelab Proxy")
 
 if __name__ == "__main__":
-    proxy.run() 
+    proxy.run()
