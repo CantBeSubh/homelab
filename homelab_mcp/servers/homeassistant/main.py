@@ -2,12 +2,14 @@ import os
 from typing import Optional
 
 import httpx
+from dotenv import load_dotenv
 from fastmcp import FastMCP
+
+load_dotenv()
 
 homeassistant_mcp = FastMCP("homeassistant")
 
 
-@homeassistant_mcp.tool
 async def get_entities(component: Optional[str]) -> str:
     """
     Get All Entities in my Homelab for a given component. If no component is specified, returns all entities.
@@ -20,7 +22,7 @@ async def get_entities(component: Optional[str]) -> str:
     url = "http://192.168.1.25:8123/api/states"
 
     headers = {
-        "Authorization": f"Bearer ${os.getenv('HA_TOKEN')}",
+        "Authorization": f"Bearer {os.getenv('HA_TOKEN')}",
         "Content-Type": "application/json",
     }
 
@@ -33,9 +35,12 @@ async def get_entities(component: Optional[str]) -> str:
                 return [
                     entity["entity_id"]
                     for entity in data
-                    if entity["entity_id"].startswith(f"${component}.")
+                    if entity["entity_id"].startswith(f"{component}.")
                 ]
 
             return [entity["entity_id"] for entity in data]
         except Exception:
+            print(
+                f"Error fetching entities from Home Assistant API: {url}: {response.status_code}|> \n {response.text}"
+            )
             return None
