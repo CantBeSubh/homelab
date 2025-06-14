@@ -1,5 +1,6 @@
 import logging
 import os
+from enum import Enum
 from typing import Optional
 
 import httpx
@@ -11,6 +12,12 @@ load_dotenv()
 logger = logging.getLogger(__name__)
 
 homeassistant_mcp = FastMCP("homeassistant")
+
+
+class ServiceEnum(str, Enum):
+    TURN_ON = "turn_on"
+    TURN_OFF = "turn_off"
+    TOGGLE = "toggle"
 
 
 @homeassistant_mcp.tool
@@ -48,3 +55,44 @@ async def get_entities(component: Optional[str]) -> str:
                 f"Error fetching entities from Home Assistant API: {url}: {response.status_code}|> \n {response.text}"
             )
             return None
+
+
+@homeassistant_mcp.tool
+async def set_entity(entity_id: str, service: ServiceEnum, data: dict) -> str:
+    """
+    Set the state of an entity in Home Assistant.
+
+    `data` could have the following keys:
+        - brightness: int
+        - color_temp_kelvin: int
+        - rgb_color: list[int] (size 3, values between 0 and 255)
+
+    Example:
+        await set_entity("light.living_room", "turn_on", {"brightness": 255})
+
+    Args:
+        entity_id (str): The entity ID to set the state of.
+        service (ServiceEnum): The service to call on the entity.
+        data (dict): The data to pass to the service.
+    Returns:
+        str: The response from the service call.
+    """
+    url = f"http://192.168.1.25:8123/api/services/homeassistant/{service.value}"
+    payload = {
+        "entity_id": entity_id,
+        **data,
+    }
+    headers = {
+        "Authorization": f"Bearer {os.getenv('HA_TOKEN')}",
+        "Content-Type": "application/json",
+    }
+    async with httpx.AsyncClient() as client:
+        try:
+            response = await client.post(url, headers=headers, json=payload)
+            response.raise_for_status()
+            return "OK"
+        except Exception:
+            logger.error(
+                f"Error setting state for entity {entity_id} with service {service.value}: {url}: {response.status_code}|> \n {response.text}"
+            )
+            return "ERROR"
