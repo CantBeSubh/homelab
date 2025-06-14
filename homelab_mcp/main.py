@@ -2,7 +2,7 @@ import asyncio
 
 import uvicorn
 from fastmcp import FastMCP
-from servers import resume_mcp
+from servers import homeassistant_mcp, resume_mcp
 from starlette.middleware import Middleware
 from starlette.middleware.cors import CORSMiddleware
 from starlette.requests import Request
@@ -25,6 +25,7 @@ http_app = main_mcp.http_app(middleware=custom_middleware)
 
 async def setup():
     await main_mcp.import_server("resume", resume_mcp)
+    await main_mcp.import_server("homeassistant", homeassistant_mcp)
 
 
 if __name__ == "__main__":
