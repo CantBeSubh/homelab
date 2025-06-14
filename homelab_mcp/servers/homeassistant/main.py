@@ -10,7 +10,7 @@ homeassistant_mcp = FastMCP("homeassistant")
 @homeassistant_mcp.tool
 async def get_entities(component: Optional[str]) -> str:
     """
-    Get All Entities for a given component. If no component is specified, returns all entities.
+    Get All Entities in my Homelab for a given component. If no component is specified, returns all entities.
 
     Args:
         component (Optional[str]): The component to filter entities by. If None, returns all entities. Eg: 'light', 'sensor', etc.
