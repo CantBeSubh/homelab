@@ -1,3 +1,4 @@
+import logging
 import os
 from typing import Optional
 
@@ -6,6 +7,8 @@ from dotenv import load_dotenv
 from fastmcp import FastMCP
 
 load_dotenv()
+
+logger = logging.getLogger(__name__)
 
 homeassistant_mcp = FastMCP("homeassistant")
 
@@ -40,7 +43,7 @@ async def get_entities(component: Optional[str]) -> str:
 
             return [entity["entity_id"] for entity in data]
         except Exception:
-            print(
+            logger.error(
                 f"Error fetching entities from Home Assistant API: {url}: {response.status_code}|> \n {response.text}"
             )
             return None
