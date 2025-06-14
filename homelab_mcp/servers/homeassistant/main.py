@@ -13,6 +13,7 @@ logger = logging.getLogger(__name__)
 homeassistant_mcp = FastMCP("homeassistant")
 
 
+@homeassistant_mcp.tool
 async def get_entities(component: Optional[str]) -> str:
     """
     Get All Entities in my Homelab for a given component. If no component is specified, returns all entities.
