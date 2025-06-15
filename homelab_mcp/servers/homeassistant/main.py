@@ -58,7 +58,7 @@ async def get_entities(component: Optional[str]) -> str:
 
 
 @homeassistant_mcp.tool
-async def set_entity(entity_id: str, service: ServiceEnum, data: dict) -> str:
+async def set_entity(entity_id: str, service: str, data: dict) -> str:
     """
     Set the state of an entity in Home Assistant.
 
@@ -72,12 +72,12 @@ async def set_entity(entity_id: str, service: ServiceEnum, data: dict) -> str:
 
     Args:
         entity_id (str): The entity ID to set the state of.
-        service (ServiceEnum): The service to call on the entity.
+        service (str): The service to call on the entity. One of these three - "turn_on", "turn_off", "toggle".
         data (dict): The data to pass to the service.
     Returns:
         str: The response from the service call.
     """
-    url = f"http://192.168.1.25:8123/api/services/homeassistant/{service.value}"
+    url = f"http://192.168.1.25:8123/api/services/homeassistant/{service}"
     payload = {
         "entity_id": entity_id,
         **data,
@@ -91,8 +91,11 @@ async def set_entity(entity_id: str, service: ServiceEnum, data: dict) -> str:
             response = await client.post(url, headers=headers, json=payload)
             response.raise_for_status()
             return "OK"
-        except Exception:
+        except Exception as e:
+            logger.exception(
+                f"Exception occurred while setting state for entity {entity_id} with service {service}: {e}"
+            )
             logger.error(
-                f"Error setting state for entity {entity_id} with service {service.value}: {url}: {response.status_code}|> \n {response.text}"
+                f"Error setting state for entity {entity_id} with service {service}: {url}: {response.status_code}|> \n {response.text}"
             )
             return "ERROR"
