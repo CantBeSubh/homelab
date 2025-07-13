@@ -4,11 +4,6 @@ services:
   backend:
     container_name: infisical-backend
     restart: unless-stopped
-    depends_on:
-      db:
-        condition: service_healthy
-      redis:
-        condition: service_started
     image: infisical/infisical:latest-postgres
     pull_policy: always
     env_file: .env
