@@ -13,8 +13,6 @@ services:
     image: temporalio/auto-setup:${TEMPORAL_VERSION}
     ports:
       - 7233:7233
-    volumes:
-      - ./dynamicconfig:/etc/temporal/config/dynamicconfig
   temporal-admin-tools:
     container_name: temporal-admin-tools
     depends_on:
