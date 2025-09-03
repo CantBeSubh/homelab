@@ -4,9 +4,41 @@ services:
     image: holyc0w/oloom-web:latest
     ports:
       - 6969:3000
+    environment:
+      - AUTH_GITHUB_ID=${AUTH_GITHUB_ID}
+      - AUTH_GITHUB_SECRET=${AUTH_GITHUB_SECRET}
+      - AUTH_SECRET=${AUTH_SECRET}
+      - AUTH_TRUST_HOST=${AUTH_TRUST_HOST}
+      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY}
+      - MINIO_PORT=${MINIO_PORT}
+      - MINIO_SECRET_KEY=${MINIO_SECRET_KEY}
+      - MINIO_URL=${MINIO_URL}
+      - OLLAMA_URL=${OLLAMA_URL}
+      - PG_DATABASE=${PG_DATABASE}
+      - PG_HOST=${PG_HOST}
+      - PG_PASSWORD=${PG_PASSWORD}
+      - PG_PORT=${PG_PORT}
+      - PG_USER=${PG_USER}
+      - TEMPORAL_URL=${TEMPORAL_URL}
 
   worker:
     image: holyc0w/oloom-worker:latest
     deploy:
       mode: replicated
       replicas: 3
+    environment:
+      - AUTH_GITHUB_ID=${AUTH_GITHUB_ID}
+      - AUTH_GITHUB_SECRET=${AUTH_GITHUB_SECRET}
+      - AUTH_SECRET=${AUTH_SECRET}
+      - AUTH_TRUST_HOST=${AUTH_TRUST_HOST}
+      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY}
+      - MINIO_PORT=${MINIO_PORT}
+      - MINIO_SECRET_KEY=${MINIO_SECRET_KEY}
+      - MINIO_URL=${MINIO_URL}
+      - OLLAMA_URL=${OLLAMA_URL}
+      - PG_DATABASE=${PG_DATABASE}
+      - PG_HOST=${PG_HOST}
+      - PG_PASSWORD=${PG_PASSWORD}
+      - PG_PORT=${PG_PORT}
+      - PG_USER=${PG_USER}
+      - TEMPORAL_URL=${TEMPORAL_URL}
