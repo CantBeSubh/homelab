@@ -1,12 +1,12 @@
 version: "3.9"
 services:
   web:
-    image: holyc0w/oloom-web
+    image: holyc0w/oloom-web:latest
     ports:
       - 6969:3000
 
   worker:
-    image: holyc0w/oloom-worker
+    image: holyc0w/oloom-worker:latest
     deploy:
       mode: replicated
       replicas: 3
