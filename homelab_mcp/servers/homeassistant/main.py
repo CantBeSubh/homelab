@@ -30,7 +30,7 @@ async def get_entities(component: Optional[str]) -> str:
     Returns:
         str[]: A list of entity IDs as strings.
     """
-    url = "http://192.168.1.25:8123/api/states"
+    url = "http://192.168.0.109:8123/api/states"
 
     headers = {
         "Authorization": f"Bearer {os.getenv('HA_TOKEN')}",
@@ -77,7 +77,7 @@ async def set_entity(entity_id: str, service: str, data: dict) -> str:
     Returns:
         str: The response from the service call.
     """
-    url = f"http://192.168.1.25:8123/api/services/homeassistant/{service}"
+    url = f"http://192.168.0.109:8123/api/services/homeassistant/{service}"
     payload = {
         "entity_id": entity_id,
         **data,
