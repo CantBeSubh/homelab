@@ -1,5 +1,6 @@
 # Homelab
 - First you mine then you craft
+<img width="3940" height="2600" alt="CleanShot 2026-08-07 at 23 59 36@2x" src="https://github.com/user-attachments/assets/dddd999b-4c9b-4765-81cb-c895d288d3d1" />
 
 
 ## Homelab MCP
